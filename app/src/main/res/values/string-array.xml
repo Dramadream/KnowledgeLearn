@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="main_item">
+        <item>透明Activity</item>
+        <item>Activity跳转的生命周期</item>
+    </string-array>
+</resources>
