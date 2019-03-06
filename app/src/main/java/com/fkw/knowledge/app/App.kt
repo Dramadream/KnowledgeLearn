@@ -13,7 +13,7 @@ import com.socks.library.KLog
 /**
  * Author:          Kevin <BR></BR>
  * CreatedTime:     2019/2/14 14:22 <BR></BR>
- * Desc:            TODO <BR></BR>
+ * Desc:            Application <BR></BR>
  *
  *
  * ModifyTime:      <BR></BR>
@@ -31,16 +31,20 @@ class App : Application() {
     }
 
     private fun initApp() {
+        initUtils()
+    }
+
+    /**
+     * 初始化工具类相关参数
+     */
+    private fun initUtils() {
+        initCrashHandler()
         initToast()
-        checkPermissionAndInit()
+        
     }
 
     private fun initToast() {
         ToastUtils.setGravity(Gravity.CENTER, 0, 0)
-    }
-
-    fun checkPermissionAndInit() {
-        initCrashHandler()
     }
 
     @SuppressLint("MissingPermission")

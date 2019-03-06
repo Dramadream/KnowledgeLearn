@@ -3,25 +3,15 @@
           xmlns:dist="http://schemas.android.com/apk/distribution"
           xmlns:tools="http://schemas.android.com/tools"
           package="com.fkw.knowledge">
-
-
     <!-- 访问网络的权限 -->
-    <uses-permission android:name="android.permission.INTERNET"/>
-
-    <!-- 访问网络状态的权限 -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <!-- 访问WIFI网络状态的权限 -->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <!-- 改变WIFI网络状态的权限 -->
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
-    <!-- 访问精确位置的权限 -->
+    <uses-permission android:name="android.permission.INTERNET"/> <!-- 访问网络状态的权限 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/> <!-- 访问WIFI网络状态的权限 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/> <!-- 改变WIFI网络状态的权限 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/> <!-- 访问精确位置的权限 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <!-- 读写存储卡的权限 -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <!-- 读取电话卡状态的权限 -->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <!-- 悬浮窗权限 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/> <!-- 读写存储卡的权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/> <!-- 读取电话卡状态的权限 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/> <!-- 悬浮窗权限 -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
 
     <dist:module dist:instant="true"/>
@@ -35,7 +25,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-
+        <activity android:name=".ui.wan_android.WanAndroidArticleActivity">
+        </activity>
+        <activity android:name=".activity.KotlinTestActivity">
+        </activity>
         <activity
             android:name=".activity.MainActivity"
             android:label="@string/app_name"
@@ -49,8 +42,7 @@
         <activity
             android:name=".activity.TransparentActivity"
             android:launchMode="singleInstance"
-            android:theme="@style/translucent"
-            />
+            android:theme="@style/translucent"/>
     </application>
 
 </manifest>
