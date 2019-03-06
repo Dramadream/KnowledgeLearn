@@ -1,15 +1,10 @@
 package com.fkw.knowledge.test;
 
-import com.fkw.knowledge.net.api.ApiManager;
-
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
-
 /**
  * ```
  * Author:          Kevin
  * CreatedTime:     2019/3/5 17:51
- * Desc:            TODO
+ * Desc:            做测试用的，都是一次乱七八在的代码
  * <p>
  * ModifyTime:
  * ModifyItems:
@@ -19,10 +14,4 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class Test {
 
-    public void test() {
-        ApiManager.Companion.getInstance().getWanAndroidApi().getHomePageArticles(1)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(articleApiResponse -> articleApiResponse.getData());
-    }
 }

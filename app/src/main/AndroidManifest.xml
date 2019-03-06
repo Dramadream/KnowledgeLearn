@@ -17,18 +17,16 @@
     <dist:module dist:instant="true"/>
 
     <application
-        android:name=".app.App"
+        android:name=".base.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.wan_android.WanAndroidArticleActivity">
-        </activity>
-        <activity android:name=".activity.KotlinTestActivity">
-        </activity>
+        tools:ignore="GoogleAppIndexingWarning"
+        >
+
         <activity
             android:name=".activity.MainActivity"
             android:label="@string/app_name"
@@ -43,6 +41,12 @@
             android:name=".activity.TransparentActivity"
             android:launchMode="singleInstance"
             android:theme="@style/translucent"/>
+        <activity android:name=".ui.wan_android.ArticleActivity">
+        </activity>
+        <activity android:name=".ui.wan_android.WanAndroidArticleActivity">
+        </activity>
+        <activity android:name=".activity.KotlinTestActivity">
+        </activity>
     </application>
 
 </manifest>

@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView
 import com.fkw.knowledge.R
 import com.fkw.knowledge.net.api.ApiManager
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
 /**
@@ -20,6 +21,7 @@ class WanAndroidArticleActivity : AppCompatActivity() {
 
     private lateinit var srl: SwipeRefreshLayout
     private lateinit var rv: RecyclerView
+    private lateinit var disposable: Disposable
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,11 +33,16 @@ class WanAndroidArticleActivity : AppCompatActivity() {
         srl = findViewById(R.id.srl)
         rv = findViewById(R.id.rv)
 
-        val disposable = ApiManager.instance.getWanAndroidApi().getHomePageArticles(1)
+        disposable = ApiManager.getInstance().wanAndroidApi.getHomePageArticles(1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { response -> val data = response.data }
 
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        disposable.dispose()
     }
 
 }

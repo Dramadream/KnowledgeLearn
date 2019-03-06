@@ -39,20 +39,17 @@ class ApiManager private constructor() {
                 //.cookieJar()
                 .build()
 
-
+        wanAndroidRetrofit = Retrofit.Builder()
+                .baseUrl(WanAndroidAPi.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .build()
     }
 
     /**
      * 获取WanAndroid的Api对象
      */
     fun getWanAndroidApi(): WanAndroidAPi {
-        if (wanAndroidRetrofit == null) {
-            wanAndroidRetrofit = Retrofit.Builder()
-                    .baseUrl(WanAndroidAPi.BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                    .build()
-        }
         return wanAndroidRetrofit.create(WanAndroidAPi::class.java)
     }
 
