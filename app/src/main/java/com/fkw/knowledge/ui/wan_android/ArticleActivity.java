@@ -1,6 +1,7 @@
 package com.fkw.knowledge.ui.wan_android;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,6 +18,7 @@ import com.fkw.knowledge.data.Article;
 import com.fkw.knowledge.data.ArticlesData;
 import com.fkw.knowledge.net.api.ApiManager;
 import com.fkw.knowledge.net.api.ErrorConsumer;
+import com.fkw.knowledge.ui.web.WebActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
@@ -64,10 +66,11 @@ public class ArticleActivity extends BaseActivity {
                 helper.setText(R.id.tv_time, time);
             }
         };
-        mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
 
+        mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                toWebViewActivity(mAdapter.getItem(position).getLink());
             }
         });
         rv.setAdapter(mAdapter);
@@ -86,6 +89,7 @@ public class ArticleActivity extends BaseActivity {
         });
 
     }
+
 
     /**
      * 初始化，或者下拉刷新，获取数据
@@ -151,6 +155,17 @@ public class ArticleActivity extends BaseActivity {
     @SuppressLint("RestrictedApi")
     private void checkDataOver(ArticlesData data) {
         smartRefreshLayout.getRefreshFooter().setNoMoreData(data.getOver());
+    }
+
+    /**
+     * 跳转到WebViewActivity
+     *
+     * @param link 要跳转的链接
+     */
+    private void toWebViewActivity(String link) {
+        Intent intent = new Intent(this, WebActivity.class);
+        intent.putExtra(WebActivity.WEB_URL, link);
+        startActivity(intent);
     }
 
 }

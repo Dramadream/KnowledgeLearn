@@ -29,7 +29,7 @@ data class Article(
         val publishTime: Long,
         val superChapterId: Int,
         val superChapterName: String,
-        val tags: List<Tag>,
+        val tags: List<ArticleTag>,
         val title: String,
         val type: Int,
         val userId: Long,

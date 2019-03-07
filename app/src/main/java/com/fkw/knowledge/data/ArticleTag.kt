@@ -11,7 +11,7 @@ package com.fkw.knowledge.data
  * ```
  * @author:         Kevin
  */
-data class Tag(
+data class ArticleTag(
         val name: String,
         val url: String
 )
