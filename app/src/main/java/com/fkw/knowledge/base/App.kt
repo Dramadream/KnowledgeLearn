@@ -8,6 +8,7 @@ import android.view.Gravity
 import com.blankj.utilcode.util.CrashUtils
 import com.blankj.utilcode.util.PermissionUtils
 import com.blankj.utilcode.util.ToastUtils
+import com.fkw.knowledge.db.DaoManager
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import com.scwang.smartrefresh.layout.api.*
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter
@@ -47,7 +48,7 @@ class App : Application() {
         super.onCreate()
 
         initApp()
-
+        DaoManager.getInstance().init(this)
     }
 
     private fun initApp() {

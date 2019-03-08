@@ -33,7 +33,7 @@ class WanAndroidArticleActivity : AppCompatActivity() {
         srl = findViewById(R.id.srl)
         rv = findViewById(R.id.rv)
 
-        disposable = ApiManager.getInstance().wanAndroidApi.getHomePageArticles(1)
+        disposable = ApiManager.instance.getWanAndroidApi().getHomePageArticles(1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { response -> val data = response.data }

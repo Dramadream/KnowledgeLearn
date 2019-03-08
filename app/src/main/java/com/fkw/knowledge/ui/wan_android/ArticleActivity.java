@@ -14,8 +14,9 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.fkw.knowledge.R;
 import com.fkw.knowledge.base.BaseActivity;
 import com.fkw.knowledge.data.ApiResponse;
-import com.fkw.knowledge.data.Article;
 import com.fkw.knowledge.data.ArticlesData;
+import com.fkw.knowledge.db.DaoManager;
+import com.fkw.knowledge.db.bean.Article;
 import com.fkw.knowledge.net.api.ApiManager;
 import com.fkw.knowledge.net.api.ErrorConsumer;
 import com.fkw.knowledge.ui.web.WebActivity;
@@ -105,14 +106,15 @@ public class ArticleActivity extends BaseActivity {
             }
         };
 
-        Disposable refreshDisposable = getArticleObservable(0).subscribe(refreshConsumer, new ErrorConsumer() {
-            @Override
-            public void accept(Throwable throwable) throws Exception {
-                super.accept(throwable);
-                smartRefreshLayout.finishRefresh();
+        Disposable refreshDisposable = getArticleObservable(0)
+                .subscribe(refreshConsumer, new ErrorConsumer() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        super.accept(throwable);
+                        smartRefreshLayout.finishRefresh();
 
-            }
-        });
+                    }
+                });
         addDisposable(refreshDisposable);
     }
 
@@ -127,21 +129,22 @@ public class ArticleActivity extends BaseActivity {
                 mAdapter.addData(response.getData().getDatas());
                 mCurrentPage = response.getData().getCurPage();
                 smartRefreshLayout.finishLoadMore();
+                DaoManager.getInstance().getDaoSession().getArticleDao().insertOrReplaceInTx(response.getData().getDatas());
             }
         };
 
-        Disposable loadMoreDisposable = getArticleObservable(mCurrentPage).subscribe(loadMoreConsumer, new ErrorConsumer() {
-            @Override
-            public void accept(Throwable throwable) throws Exception {
-                super.accept(throwable);
-                smartRefreshLayout.finishLoadMore();
-            }
-        });
+        Disposable loadMoreDisposable = getArticleObservable(mCurrentPage)
+                .subscribe(loadMoreConsumer, new ErrorConsumer() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        super.accept(throwable);
+                        smartRefreshLayout.finishLoadMore();
+                    }
+                });
         addDisposable(loadMoreDisposable);
     }
 
     private Observable<ApiResponse<ArticlesData>> getArticleObservable(int page) {
-        //return ApiManager1.getInstance().getWanAndroidApi().getHomePageArticles(page)
         return ApiManager.Companion.getInstance().getWanAndroidApi().getHomePageArticles(page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());

@@ -1,5 +1,7 @@
 package com.fkw.knowledge.data
 
+import com.fkw.knowledge.db.bean.Article
+
 /**
  * Author:          Kevin </BR>
  * CreatedTime:     2019/3/6 16:16 </BR>

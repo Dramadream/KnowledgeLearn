@@ -27,7 +27,18 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        disposeAll();
+    }
+
+    /**
+     * 取消所有的订阅关系
+     */
+    private void disposeAll() {
         DisposeUtil.dispose(mDisposableList);
+        if (mDisposableList != null) {
+            mDisposableList.clear();
+            mDisposableList = null;
+        }
     }
 
     /**
