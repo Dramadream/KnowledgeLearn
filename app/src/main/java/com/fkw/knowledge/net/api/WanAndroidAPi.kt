@@ -20,7 +20,7 @@ import retrofit2.http.Path
 interface WanAndroidAPi {
 
     companion object {
-        const val BASE_URL: String = "http://www.wanandroid.com/"
+        const val BASE_URL: String = "https://www.wanandroid.com/"
     }
 
 

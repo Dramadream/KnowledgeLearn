@@ -17,6 +17,7 @@ import com.fkw.knowledge.data.ApiResponse;
 import com.fkw.knowledge.data.ArticlesData;
 import com.fkw.knowledge.db.DaoManager;
 import com.fkw.knowledge.db.bean.Article;
+import com.fkw.knowledge.db.gen.ArticleDao;
 import com.fkw.knowledge.net.api.ApiManager;
 import com.fkw.knowledge.net.api.ErrorConsumer;
 import com.fkw.knowledge.ui.web.WebActivity;
@@ -44,6 +45,7 @@ public class ArticleActivity extends BaseActivity {
     private BaseQuickAdapter<Article, BaseViewHolder> mAdapter;
     private List<Article> mData;
     private int mCurrentPage = 0;
+    private ArticleDao mArticleDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,29 +82,51 @@ public class ArticleActivity extends BaseActivity {
         smartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                getLoadMoreData();
+                loadMoreData();
             }
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                initData();
+                refreshData();
             }
         });
 
+        initData();
     }
 
+    private void initData() {
+        getDataFromDb();
+
+    }
+
+    private void getDataFromDb() {
+        if (mArticleDao == null) {
+            mArticleDao = DaoManager.getInstance().getDaoSession().getArticleDao();
+        }
+        List<Article> list = mArticleDao.queryBuilder()
+                .orderDesc(ArticleDao.Properties.PublishTime)
+                .list();
+        if (list != null && list.size() > 0) {
+            //LogUtils.json(list);
+            mAdapter.setNewData(list);
+        }
+
+
+    }
 
     /**
      * 初始化，或者下拉刷新，获取数据
      */
-    private void initData() {
+    private void refreshData() {
         Consumer<ApiResponse<ArticlesData>> refreshConsumer = new Consumer<ApiResponse<ArticlesData>>() {
             @Override
             public void accept(ApiResponse<ArticlesData> response) throws Exception {
                 mAdapter.setNewData(response.getData().getDatas());
+                //LogUtils.json(response.getData().getDatas());
                 mCurrentPage = response.getData().getCurPage();
                 checkDataOver(response.getData());
                 smartRefreshLayout.finishRefresh();
+                saveData(response.getData().getDatas());
             }
         };
 
@@ -112,7 +136,6 @@ public class ArticleActivity extends BaseActivity {
                     public void accept(Throwable throwable) throws Exception {
                         super.accept(throwable);
                         smartRefreshLayout.finishRefresh();
-
                     }
                 });
         addDisposable(refreshDisposable);
@@ -122,14 +145,15 @@ public class ArticleActivity extends BaseActivity {
     /**
      * 上拉更多时的数据
      */
-    private void getLoadMoreData() {
+    private void loadMoreData() {
         Consumer<ApiResponse<ArticlesData>> loadMoreConsumer = new Consumer<ApiResponse<ArticlesData>>() {
             @Override
             public void accept(ApiResponse<ArticlesData> response) throws Exception {
+                //LogUtils.json(response.getData().getDatas());
                 mAdapter.addData(response.getData().getDatas());
                 mCurrentPage = response.getData().getCurPage();
                 smartRefreshLayout.finishLoadMore();
-                DaoManager.getInstance().getDaoSession().getArticleDao().insertOrReplaceInTx(response.getData().getDatas());
+                saveData(response.getData().getDatas());
             }
         };
 
@@ -143,6 +167,7 @@ public class ArticleActivity extends BaseActivity {
                 });
         addDisposable(loadMoreDisposable);
     }
+
 
     private Observable<ApiResponse<ArticlesData>> getArticleObservable(int page) {
         return ApiManager.Companion.getInstance().getWanAndroidApi().getHomePageArticles(page)
@@ -169,6 +194,13 @@ public class ArticleActivity extends BaseActivity {
         Intent intent = new Intent(this, WebActivity.class);
         intent.putExtra(WebActivity.WEB_URL, link);
         startActivity(intent);
+    }
+
+    /**
+     * 插入或者替换数据
+     */
+    private void saveData(List<Article> list) {
+        mArticleDao.insertOrReplaceInTx(list);
     }
 
 }

@@ -77,13 +77,13 @@ public class Article {
     @Convert(columnType = String.class, converter = TagConvert.class)
     private List<Tag> tags;
 
-    @Generated(hash = 232289557)
-    public Article(long id, long chapterId, String apkLink, String author,
-            String chapterName, boolean collect, long courseId, String desc,
-            String envelopePic, boolean fresh, String link, String niceDate,
-            String origin, String projectLink, long publishTime, int superChapterId,
-            String superChapterName, String title, int type, long userId,
-            long visible, int zan, List<Tag> tags) {
+    @Generated(hash = 1786604528)
+    public Article(Long id, long chapterId, String apkLink, String author,
+                   String chapterName, boolean collect, long courseId, String desc,
+                   String envelopePic, boolean fresh, String link, String niceDate,
+                   String origin, String projectLink, long publishTime, int superChapterId,
+                   String superChapterName, String title, int type, long userId,
+                   long visible, int zan, List<Tag> tags) {
         this.id = id;
         this.chapterId = chapterId;
         this.apkLink = apkLink;
@@ -113,8 +113,24 @@ public class Article {
     public Article() {
     }
 
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public long getChapterId() {
+        return this.chapterId;
+    }
+
+    public void setChapterId(long chapterId) {
+        this.chapterId = chapterId;
+    }
+
     public String getApkLink() {
-        return apkLink;
+        return this.apkLink;
     }
 
     public void setApkLink(String apkLink) {
@@ -122,31 +138,23 @@ public class Article {
     }
 
     public String getAuthor() {
-        return author;
+        return this.author;
     }
 
     public void setAuthor(String author) {
         this.author = author;
     }
 
-    public long getChapterId() {
-        return chapterId;
-    }
-
-    public void setChapterId(long chapterId) {
-        this.chapterId = chapterId;
-    }
-
     public String getChapterName() {
-        return chapterName;
+        return this.chapterName;
     }
 
     public void setChapterName(String chapterName) {
         this.chapterName = chapterName;
     }
 
-    public boolean isCollect() {
-        return collect;
+    public boolean getCollect() {
+        return this.collect;
     }
 
     public void setCollect(boolean collect) {
@@ -154,7 +162,7 @@ public class Article {
     }
 
     public long getCourseId() {
-        return courseId;
+        return this.courseId;
     }
 
     public void setCourseId(long courseId) {
@@ -162,7 +170,7 @@ public class Article {
     }
 
     public String getDesc() {
-        return desc;
+        return this.desc;
     }
 
     public void setDesc(String desc) {
@@ -170,31 +178,23 @@ public class Article {
     }
 
     public String getEnvelopePic() {
-        return envelopePic;
+        return this.envelopePic;
     }
 
     public void setEnvelopePic(String envelopePic) {
         this.envelopePic = envelopePic;
     }
 
-    public boolean isFresh() {
-        return fresh;
+    public boolean getFresh() {
+        return this.fresh;
     }
 
     public void setFresh(boolean fresh) {
         this.fresh = fresh;
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
     public String getLink() {
-        return link;
+        return this.link;
     }
 
     public void setLink(String link) {
@@ -202,7 +202,7 @@ public class Article {
     }
 
     public String getNiceDate() {
-        return niceDate;
+        return this.niceDate;
     }
 
     public void setNiceDate(String niceDate) {
@@ -210,7 +210,7 @@ public class Article {
     }
 
     public String getOrigin() {
-        return origin;
+        return this.origin;
     }
 
     public void setOrigin(String origin) {
@@ -218,7 +218,7 @@ public class Article {
     }
 
     public String getProjectLink() {
-        return projectLink;
+        return this.projectLink;
     }
 
     public void setProjectLink(String projectLink) {
@@ -226,7 +226,7 @@ public class Article {
     }
 
     public long getPublishTime() {
-        return publishTime;
+        return this.publishTime;
     }
 
     public void setPublishTime(long publishTime) {
@@ -234,7 +234,7 @@ public class Article {
     }
 
     public int getSuperChapterId() {
-        return superChapterId;
+        return this.superChapterId;
     }
 
     public void setSuperChapterId(int superChapterId) {
@@ -242,7 +242,7 @@ public class Article {
     }
 
     public String getSuperChapterName() {
-        return superChapterName;
+        return this.superChapterName;
     }
 
     public void setSuperChapterName(String superChapterName) {
@@ -250,7 +250,7 @@ public class Article {
     }
 
     public String getTitle() {
-        return title;
+        return this.title;
     }
 
     public void setTitle(String title) {
@@ -258,7 +258,7 @@ public class Article {
     }
 
     public int getType() {
-        return type;
+        return this.type;
     }
 
     public void setType(int type) {
@@ -266,7 +266,7 @@ public class Article {
     }
 
     public long getUserId() {
-        return userId;
+        return this.userId;
     }
 
     public void setUserId(long userId) {
@@ -274,7 +274,7 @@ public class Article {
     }
 
     public long getVisible() {
-        return visible;
+        return this.visible;
     }
 
     public void setVisible(long visible) {
@@ -282,27 +282,49 @@ public class Article {
     }
 
     public int getZan() {
-        return zan;
+        return this.zan;
     }
 
     public void setZan(int zan) {
         this.zan = zan;
     }
 
-    public boolean getCollect() {
-        return this.collect;
-    }
-
-    public boolean getFresh() {
-        return this.fresh;
-    }
-
     public List<Tag> getTags() {
-        return tags;
+        return this.tags;
     }
 
     public void setTags(List<Tag> tags) {
         this.tags = tags;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Article{" +
+                "id=" + id +
+                ", chapterId=" + chapterId +
+                ", apkLink='" + apkLink + '\'' +
+                ", author='" + author + '\'' +
+                ", chapterName='" + chapterName + '\'' +
+                ", collect=" + collect +
+                ", courseId=" + courseId +
+                ", desc='" + desc + '\'' +
+                ", envelopePic='" + envelopePic + '\'' +
+                ", fresh=" + fresh +
+                ", link='" + link + '\'' +
+                ", niceDate='" + niceDate + '\'' +
+                ", origin='" + origin + '\'' +
+                ", projectLink='" + projectLink + '\'' +
+                ", publishTime=" + publishTime +
+                ", superChapterId=" + superChapterId +
+                ", superChapterName='" + superChapterName + '\'' +
+                ", title='" + title + '\'' +
+                ", type=" + type +
+                ", userId=" + userId +
+                ", visible=" + visible +
+                ", zan=" + zan +
+                ", tags=" + tags +
+                '}';
     }
 
 }

@@ -54,6 +54,14 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    // Chrome 调试框架 stetho
+    implementation "com.facebook.stetho:stetho:$stetho_version"
+    // 调试网络
+    implementation "com.facebook.stetho:stetho-okhttp3:$stetho_version"
+    // 调试JavaScript
+    implementation "com.facebook.stetho:stetho-js-rhino:$stetho_version"
+
     // Google官方扩展包
     implementation "com.android.support:appcompat-v7:$support_version"
     implementation "com.android.support:design:$support_version"
@@ -68,27 +76,31 @@ dependencies {
     implementation 'com.amitshekhar.android:rx2-android-networking:1.0.0'
     implementation 'com.jakewharton.rxbinding2:rxbinding:2.2.0'
 
+    // 图片库 Glide
+    implementation "com.github.bumptech.glide:glide:$glide_version"
+    annotationProcessor "com.github.bumptech.glide:compiler:$glide_version"
+
+    // 数据库 -- GreenDao
+    implementation "org.greenrobot:greendao:$greendao_version"
+
+    // 依赖注入框架Dagger2
+    //implementation "com.google.dagger:dagger:$dagger2_version"
+    //annotationProcessor "com.google.dagger:dagger-compiler:$dagger2_version"
+
     // Utils
     implementation 'com.blankj:utilcode:1.23.4'
 
     // RecyclerView 的 Adapter 框架
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.46'
 
-    // Log框架
-    implementation 'com.github.zhaokaiqiang.klog:library:1.6.0'
-
     // 下拉刷新上拉加载的框架
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-20'
     //没有使用特殊Header，可以不加这行
     implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-20'
 
-    // 图片库 Glide
-    implementation "com.github.bumptech.glide:glide:$glide_version"
-    annotationProcessor "com.github.bumptech.glide:compiler:$glide_version"
 
-    // 数据库 -- GreenDao
-    // GreenDao
-    implementation "org.greenrobot:greendao:$greendao_version"
+    // Log框架
+    implementation 'com.github.zhaokaiqiang.klog:library:1.6.0'
 }
 
 repositories {

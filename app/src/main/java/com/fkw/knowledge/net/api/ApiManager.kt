@@ -1,5 +1,6 @@
 package com.fkw.knowledge.net.api
 
+import com.facebook.stetho.okhttp3.StethoInterceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -31,13 +32,14 @@ class ApiManager private constructor() {
     }
 
     init {
-        okHttpClient = OkHttpClient.Builder()
+        val okhttpBuild = OkHttpClient.Builder()
                 .connectTimeout(outTime, TimeUnit.MILLISECONDS)
                 .readTimeout(outTime, TimeUnit.MILLISECONDS)
                 .writeTimeout(outTime, TimeUnit.MILLISECONDS)
-                //.addNetworkInterceptor(StethoInterceptor())
-                //.cookieJar()
-                .build()
+
+        okhttpBuild.addNetworkInterceptor(StethoInterceptor())
+
+        okHttpClient = okhttpBuild.build()
 
         wanAndroidRetrofit = Retrofit.Builder()
                 .baseUrl(WanAndroidAPi.BASE_URL)

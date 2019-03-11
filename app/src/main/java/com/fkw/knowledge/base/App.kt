@@ -8,6 +8,7 @@ import android.view.Gravity
 import com.blankj.utilcode.util.CrashUtils
 import com.blankj.utilcode.util.PermissionUtils
 import com.blankj.utilcode.util.ToastUtils
+import com.facebook.stetho.Stetho
 import com.fkw.knowledge.db.DaoManager
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import com.scwang.smartrefresh.layout.api.*
@@ -53,7 +54,9 @@ class App : Application() {
 
     private fun initApp() {
         initUtils()
+        initStetho()
     }
+
 
     /**
      * 初始化工具类相关参数
@@ -64,14 +67,19 @@ class App : Application() {
 
     }
 
-    private fun initToast() {
-        ToastUtils.setGravity(Gravity.CENTER, 0, 0)
-    }
 
     @SuppressLint("MissingPermission")
     private fun initCrashHandler() {
         if (PermissionUtils.isGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
             CrashUtils.init(Constants.CRASH_DIR_PATH) { crashInfo, e -> KLog.i(crashInfo) }
         }
+    }
+
+    private fun initToast() {
+        ToastUtils.setGravity(Gravity.CENTER, 0, 0)
+    }
+
+    private fun initStetho() {
+            Stetho.initializeWithDefaults(this)
     }
 }

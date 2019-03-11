@@ -19,5 +19,6 @@ public class ErrorConsumer implements Consumer<Throwable> {
     @Override
     public void accept(Throwable throwable) throws Exception {
         ToastUtils.showShort("网络错误");
+        throwable.printStackTrace();
     }
 }
