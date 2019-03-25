@@ -48,6 +48,7 @@
         <activity android:name=".activity.KotlinTestActivity">
         </activity>
         <activity android:name=".ui.web.WebActivity"/>
+        <activity android:name=".ui.greendao.GreenDaoActivity"/>
     </application>
 
 </manifest>

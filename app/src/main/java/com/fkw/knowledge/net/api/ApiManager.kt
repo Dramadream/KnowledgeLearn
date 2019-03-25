@@ -5,6 +5,7 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import tech.linjiang.pandora.Pandora
 import java.util.concurrent.TimeUnit
 
 /**
@@ -38,11 +39,13 @@ class ApiManager private constructor() {
                 .writeTimeout(outTime, TimeUnit.MILLISECONDS)
 
         okhttpBuild.addNetworkInterceptor(StethoInterceptor())
+        okhttpBuild.addInterceptor(Pandora.get().interceptor)
 
         okHttpClient = okhttpBuild.build()
 
         wanAndroidRetrofit = Retrofit.Builder()
                 .baseUrl(WanAndroidAPi.BASE_URL)
+                .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build()

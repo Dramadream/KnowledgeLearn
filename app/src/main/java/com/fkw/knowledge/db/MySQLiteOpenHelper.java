@@ -7,6 +7,7 @@ import android.util.Log;
 import com.fkw.knowledge.db.gen.ArticleDao;
 import com.fkw.knowledge.db.gen.DaoMaster;
 import com.fkw.knowledge.db.gen.TagDao;
+import com.fkw.knowledge.db.gen.TestBeanDao;
 
 import org.greenrobot.greendao.database.Database;
 
@@ -44,7 +45,7 @@ public class MySQLiteOpenHelper extends DaoMaster.OpenHelper {
          */
         //        MigrationHelper.migrate(db);
         if (newVersion > oldVersion) {
-            MigrationHelper.migrate(db, ArticleDao.class, TagDao.class);
+            MigrationHelper.migrate(db, ArticleDao.class, TagDao.class, TestBeanDao.class);
         }
     }
 }

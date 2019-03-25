@@ -47,8 +47,10 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+
     // Kotlin 需要
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
     // 测试所需
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     testImplementation 'junit:junit:4.12'
@@ -57,10 +59,19 @@ dependencies {
 
     // Chrome 调试框架 stetho
     implementation "com.facebook.stetho:stetho:$stetho_version"
+
     // 调试网络
     implementation "com.facebook.stetho:stetho-okhttp3:$stetho_version"
+
     // 调试JavaScript
     implementation "com.facebook.stetho:stetho-js-rhino:$stetho_version"
+
+    // LeakCanary
+    debugImplementation "com.squareup.leakcanary:leakcanary-android:$leak_canary_version"
+    releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$leak_canary_version"
+
+    // Optional, if you use support library fragments:
+    debugImplementation "com.squareup.leakcanary:leakcanary-support-fragment:$leak_canary_version"
 
     // Google官方扩展包
     implementation "com.android.support:appcompat-v7:$support_version"
@@ -84,7 +95,9 @@ dependencies {
     implementation "org.greenrobot:greendao:$greendao_version"
 
     // 依赖注入框架Dagger2
+
     //implementation "com.google.dagger:dagger:$dagger2_version"
+
     //annotationProcessor "com.google.dagger:dagger-compiler:$dagger2_version"
 
     // Utils
@@ -95,12 +108,17 @@ dependencies {
 
     // 下拉刷新上拉加载的框架
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-20'
+
     //没有使用特殊Header，可以不加这行
     implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-20'
 
-
     // Log框架
     implementation 'com.github.zhaokaiqiang.klog:library:1.6.0'
+
+    // 调试工具
+    debugImplementation "com.github.whataa:pandora:v${pandora_version}"
+    releaseImplementation "com.github.whataa:pandora-no-op:v${pandora_version}"
+
 }
 
 repositories {

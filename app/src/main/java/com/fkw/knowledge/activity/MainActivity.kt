@@ -20,6 +20,7 @@ import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.PermissionUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.fkw.knowledge.R
+import com.fkw.knowledge.ui.greendao.GreenDaoActivity
 import com.fkw.knowledge.ui.wan_android.ArticleActivity
 import com.socks.library.KLog
 
@@ -72,6 +73,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         btnRequestFloatPermission.setOnClickListener(this)
         findViewById<Button>(R.id.btn_kotlin_test).setOnClickListener(this)
         findViewById<Button>(R.id.btn_wan_android).setOnClickListener(this)
+        findViewById<Button>(R.id.btn_green_dao).setOnClickListener(this)
     }
 
     private fun initData() {
@@ -85,6 +87,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             R.id.btn_request_float_permission -> requestFloatPermission()
             R.id.btn_kotlin_test -> ActivityUtils.startActivity(KotlinTestActivity::class.java)
             R.id.btn_wan_android -> ActivityUtils.startActivity(ArticleActivity::class.java)
+            R.id.btn_green_dao -> ActivityUtils.startActivity(GreenDaoActivity::class.java)
         }
     }
 

@@ -15,6 +15,7 @@ import com.scwang.smartrefresh.layout.api.*
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter
 import com.scwang.smartrefresh.layout.header.ClassicsHeader
 import com.socks.library.KLog
+import com.squareup.leakcanary.LeakCanary
 
 /**
  * Author:          Kevin <BR></BR>
@@ -50,7 +51,9 @@ class App : Application() {
 
         initApp()
         DaoManager.getInstance().init(this)
+        initLeakCanary()
     }
+
 
     private fun initApp() {
         initUtils()
@@ -67,19 +70,44 @@ class App : Application() {
 
     }
 
-
+    /**
+     * 初始化CrashHandler
+     */
     @SuppressLint("MissingPermission")
     private fun initCrashHandler() {
         if (PermissionUtils.isGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-            CrashUtils.init(Constants.CRASH_DIR_PATH) { crashInfo, e -> KLog.i(crashInfo) }
+            CrashUtils.init(Constants.CRASH_DIR_PATH) { crashInfo, e ->
+                KLog.i(crashInfo)
+                System.exit(0)
+                android.os.Process.killProcess(android.os.Process.myPid())
+            }
         }
     }
 
+    /**
+     * 初始化工具类 -- Toast
+     */
     private fun initToast() {
         ToastUtils.setGravity(Gravity.CENTER, 0, 0)
     }
 
+    /**
+     * 初始化数据库调试工具 -- Stetho
+     */
     private fun initStetho() {
-            Stetho.initializeWithDefaults(this)
+        Stetho.initializeWithDefaults(this)
     }
+
+    /**
+     * 初始化 LeakCanary
+     */
+    private fun initLeakCanary() {
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            return
+        }
+        LeakCanary.install(this)
+    }
+
 }

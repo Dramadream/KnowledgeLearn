@@ -3,10 +3,15 @@ package com.fkw.knowledge.ui.wan_android;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.blankj.utilcode.util.TimeUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -21,6 +26,8 @@ import com.fkw.knowledge.db.gen.ArticleDao;
 import com.fkw.knowledge.net.api.ApiManager;
 import com.fkw.knowledge.net.api.ErrorConsumer;
 import com.fkw.knowledge.ui.web.WebActivity;
+import com.fkw.knowledge.widget.CommonListener;
+import com.fkw.loadandretry.LoadAndRetryManager;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
@@ -46,11 +53,12 @@ public class ArticleActivity extends BaseActivity {
     private List<Article> mData;
     private int mCurrentPage = 0;
     private ArticleDao mArticleDao;
+    private LoadAndRetryManager mLoadAndRetryManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_article);
+        setContentView(R.layout.layout_refresh_common);
         initView();
     }
 
@@ -78,7 +86,6 @@ public class ArticleActivity extends BaseActivity {
         });
         rv.setAdapter(mAdapter);
 
-        smartRefreshLayout.autoRefresh();
         smartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
@@ -91,12 +98,32 @@ public class ArticleActivity extends BaseActivity {
             }
         });
 
+        mLoadAndRetryManager = LoadAndRetryManager.generate(this, new CommonListener() {
+            @Override
+            protected void retry() {
+                refreshData();
+                mLoadAndRetryManager.showLoading();
+            }
+
+            @Override
+            protected void setRetryViewResource(ImageView ivRetry, TextView tvRetry, Button btnRetry) {
+
+            }
+        });
+
         initData();
     }
 
     private void initData() {
         getDataFromDb();
-
+        mLoadAndRetryManager.showLoading();
+        //refreshData();
+        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mLoadAndRetryManager.showRetry();
+            }
+        }, 3000);
     }
 
     private void getDataFromDb() {
@@ -122,6 +149,7 @@ public class ArticleActivity extends BaseActivity {
             @Override
             public void accept(ApiResponse<ArticlesData> response) throws Exception {
                 mAdapter.setNewData(response.getData().getDatas());
+                mLoadAndRetryManager.showContent();
                 //LogUtils.json(response.getData().getDatas());
                 mCurrentPage = response.getData().getCurPage();
                 checkDataOver(response.getData());
@@ -129,6 +157,7 @@ public class ArticleActivity extends BaseActivity {
                 saveData(response.getData().getDatas());
             }
         };
+
 
         Disposable refreshDisposable = getArticleObservable(0)
                 .subscribe(refreshConsumer, new ErrorConsumer() {
@@ -139,6 +168,7 @@ public class ArticleActivity extends BaseActivity {
                     }
                 });
         addDisposable(refreshDisposable);
+
     }
 
 
@@ -154,6 +184,7 @@ public class ArticleActivity extends BaseActivity {
                 mCurrentPage = response.getData().getCurPage();
                 smartRefreshLayout.finishLoadMore();
                 saveData(response.getData().getDatas());
+                checkDataOver(response.getData());
             }
         };
 

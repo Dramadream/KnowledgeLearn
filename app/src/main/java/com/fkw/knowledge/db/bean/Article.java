@@ -7,6 +7,7 @@ import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Index;
+import org.greenrobot.greendao.annotation.Property;
 
 import java.util.List;
 
@@ -50,10 +51,16 @@ public class Article {
      * zan : 0
      */
 
-    @Id(autoincrement = false)
-    private Long id;
+    @Id(autoincrement = true)
+    private Long ID;
+
+    @Index(unique = true)
+    @Property(nameInDb = "wanId")
+    private long id;
+
     @Index(unique = true)
     private long chapterId;
+
     private String apkLink;
     private String author;
     private String chapterName;
@@ -74,16 +81,19 @@ public class Article {
     private long userId;
     private long visible;
     private int zan;
+
     @Convert(columnType = String.class, converter = TagConvert.class)
     private List<Tag> tags;
 
-    @Generated(hash = 1786604528)
-    public Article(Long id, long chapterId, String apkLink, String author,
+
+    @Generated(hash = 260390150)
+    public Article(Long ID, long id, long chapterId, String apkLink, String author,
                    String chapterName, boolean collect, long courseId, String desc,
                    String envelopePic, boolean fresh, String link, String niceDate,
                    String origin, String projectLink, long publishTime, int superChapterId,
                    String superChapterName, String title, int type, long userId,
                    long visible, int zan, List<Tag> tags) {
+        this.ID = ID;
         this.id = id;
         this.chapterId = chapterId;
         this.apkLink = apkLink;
@@ -108,200 +118,18 @@ public class Article {
         this.zan = zan;
         this.tags = tags;
     }
+
 
     @Generated(hash = 742516792)
     public Article() {
-    }
-
-    public Long getId() {
-        return this.id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public long getChapterId() {
-        return this.chapterId;
-    }
-
-    public void setChapterId(long chapterId) {
-        this.chapterId = chapterId;
-    }
-
-    public String getApkLink() {
-        return this.apkLink;
-    }
-
-    public void setApkLink(String apkLink) {
-        this.apkLink = apkLink;
-    }
-
-    public String getAuthor() {
-        return this.author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    public String getChapterName() {
-        return this.chapterName;
-    }
-
-    public void setChapterName(String chapterName) {
-        this.chapterName = chapterName;
-    }
-
-    public boolean getCollect() {
-        return this.collect;
-    }
-
-    public void setCollect(boolean collect) {
-        this.collect = collect;
-    }
-
-    public long getCourseId() {
-        return this.courseId;
-    }
-
-    public void setCourseId(long courseId) {
-        this.courseId = courseId;
-    }
-
-    public String getDesc() {
-        return this.desc;
-    }
-
-    public void setDesc(String desc) {
-        this.desc = desc;
-    }
-
-    public String getEnvelopePic() {
-        return this.envelopePic;
-    }
-
-    public void setEnvelopePic(String envelopePic) {
-        this.envelopePic = envelopePic;
-    }
-
-    public boolean getFresh() {
-        return this.fresh;
-    }
-
-    public void setFresh(boolean fresh) {
-        this.fresh = fresh;
-    }
-
-    public String getLink() {
-        return this.link;
-    }
-
-    public void setLink(String link) {
-        this.link = link;
-    }
-
-    public String getNiceDate() {
-        return this.niceDate;
-    }
-
-    public void setNiceDate(String niceDate) {
-        this.niceDate = niceDate;
-    }
-
-    public String getOrigin() {
-        return this.origin;
-    }
-
-    public void setOrigin(String origin) {
-        this.origin = origin;
-    }
-
-    public String getProjectLink() {
-        return this.projectLink;
-    }
-
-    public void setProjectLink(String projectLink) {
-        this.projectLink = projectLink;
-    }
-
-    public long getPublishTime() {
-        return this.publishTime;
-    }
-
-    public void setPublishTime(long publishTime) {
-        this.publishTime = publishTime;
-    }
-
-    public int getSuperChapterId() {
-        return this.superChapterId;
-    }
-
-    public void setSuperChapterId(int superChapterId) {
-        this.superChapterId = superChapterId;
-    }
-
-    public String getSuperChapterName() {
-        return this.superChapterName;
-    }
-
-    public void setSuperChapterName(String superChapterName) {
-        this.superChapterName = superChapterName;
-    }
-
-    public String getTitle() {
-        return this.title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public int getType() {
-        return this.type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
-    }
-
-    public long getUserId() {
-        return this.userId;
-    }
-
-    public void setUserId(long userId) {
-        this.userId = userId;
-    }
-
-    public long getVisible() {
-        return this.visible;
-    }
-
-    public void setVisible(long visible) {
-        this.visible = visible;
-    }
-
-    public int getZan() {
-        return this.zan;
-    }
-
-    public void setZan(int zan) {
-        this.zan = zan;
-    }
-
-    public List<Tag> getTags() {
-        return this.tags;
-    }
-
-    public void setTags(List<Tag> tags) {
-        this.tags = tags;
     }
 
 
     @Override
     public String toString() {
         return "Article{" +
-                "id=" + id +
+                "ID=" + ID +
+                ", id=" + id +
                 ", chapterId=" + chapterId +
                 ", apkLink='" + apkLink + '\'' +
                 ", author='" + author + '\'' +
@@ -327,4 +155,243 @@ public class Article {
                 '}';
     }
 
+
+    public Long getID() {
+        return this.ID;
+    }
+
+
+    public void setID(Long ID) {
+        this.ID = ID;
+    }
+
+
+    public long getId() {
+        return this.id;
+    }
+
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+
+    public long getChapterId() {
+        return this.chapterId;
+    }
+
+
+    public void setChapterId(long chapterId) {
+        this.chapterId = chapterId;
+    }
+
+
+    public String getApkLink() {
+        return this.apkLink;
+    }
+
+
+    public void setApkLink(String apkLink) {
+        this.apkLink = apkLink;
+    }
+
+
+    public String getAuthor() {
+        return this.author;
+    }
+
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+
+    public String getChapterName() {
+        return this.chapterName;
+    }
+
+
+    public void setChapterName(String chapterName) {
+        this.chapterName = chapterName;
+    }
+
+
+    public boolean getCollect() {
+        return this.collect;
+    }
+
+
+    public void setCollect(boolean collect) {
+        this.collect = collect;
+    }
+
+
+    public long getCourseId() {
+        return this.courseId;
+    }
+
+
+    public void setCourseId(long courseId) {
+        this.courseId = courseId;
+    }
+
+
+    public String getDesc() {
+        return this.desc;
+    }
+
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+
+
+    public String getEnvelopePic() {
+        return this.envelopePic;
+    }
+
+
+    public void setEnvelopePic(String envelopePic) {
+        this.envelopePic = envelopePic;
+    }
+
+
+    public boolean getFresh() {
+        return this.fresh;
+    }
+
+
+    public void setFresh(boolean fresh) {
+        this.fresh = fresh;
+    }
+
+
+    public String getLink() {
+        return this.link;
+    }
+
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
+
+    public String getNiceDate() {
+        return this.niceDate;
+    }
+
+
+    public void setNiceDate(String niceDate) {
+        this.niceDate = niceDate;
+    }
+
+
+    public String getOrigin() {
+        return this.origin;
+    }
+
+
+    public void setOrigin(String origin) {
+        this.origin = origin;
+    }
+
+
+    public String getProjectLink() {
+        return this.projectLink;
+    }
+
+
+    public void setProjectLink(String projectLink) {
+        this.projectLink = projectLink;
+    }
+
+
+    public long getPublishTime() {
+        return this.publishTime;
+    }
+
+
+    public void setPublishTime(long publishTime) {
+        this.publishTime = publishTime;
+    }
+
+
+    public int getSuperChapterId() {
+        return this.superChapterId;
+    }
+
+
+    public void setSuperChapterId(int superChapterId) {
+        this.superChapterId = superChapterId;
+    }
+
+
+    public String getSuperChapterName() {
+        return this.superChapterName;
+    }
+
+
+    public void setSuperChapterName(String superChapterName) {
+        this.superChapterName = superChapterName;
+    }
+
+
+    public String getTitle() {
+        return this.title;
+    }
+
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+
+    public int getType() {
+        return this.type;
+    }
+
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+
+    public long getUserId() {
+        return this.userId;
+    }
+
+
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
+
+
+    public long getVisible() {
+        return this.visible;
+    }
+
+
+    public void setVisible(long visible) {
+        this.visible = visible;
+    }
+
+
+    public int getZan() {
+        return this.zan;
+    }
+
+
+    public void setZan(int zan) {
+        this.zan = zan;
+    }
+
+
+    public List<Tag> getTags() {
+        return this.tags;
+    }
+
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
+    }
 }
