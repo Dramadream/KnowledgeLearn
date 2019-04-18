@@ -1,4 +1,4 @@
-package com.fkw.knowledge.activity
+package com.fkw.knowledge.ui
 
 import android.content.Intent
 import android.os.Bundle

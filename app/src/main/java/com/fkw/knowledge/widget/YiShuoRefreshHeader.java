@@ -10,10 +10,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.load.resource.gif.GifDrawable;
+import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 import com.fkw.knowledge.R;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshKernel;
@@ -56,9 +61,20 @@ public class YiShuoRefreshHeader extends LinearLayout implements RefreshHeader {
         Glide.with(this)
                 .asGif()
                 .load(R.drawable.icon_loading_header)
-                .apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL))
+                .apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.RESOURCE))
+                .listener(new RequestListener<GifDrawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<GifDrawable> target, boolean isFirstResource) {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(GifDrawable resource, Object model, Target<GifDrawable> target, DataSource dataSource, boolean isFirstResource) {
+                        mGifDrawable = resource;
+                        return false;
+                    }
+                })
                 .into(ivRefresh);
-        mGifDrawable = (GifDrawable) ivRefresh.getDrawable();
     }
 
 
@@ -86,15 +102,12 @@ public class YiShuoRefreshHeader extends LinearLayout implements RefreshHeader {
             // 下拉刷新
             case PullDownToRefresh:
                 tvRefresh.setText("下拉开始刷新");
-                stopAnimation();
                 break;
             case ReleaseToRefresh:
                 tvRefresh.setText("释放立即刷新");
-                stopAnimation();
                 break;
             case Refreshing:
                 tvRefresh.setText("正在刷新");
-                startAnim();
                 break;
             // 刷新完成的操作在下面onFinish中处理了
             //case RefreshFinish:
@@ -107,19 +120,21 @@ public class YiShuoRefreshHeader extends LinearLayout implements RefreshHeader {
 
     private void startAnim() {
         if (mGifDrawable != null) {
+            LogUtils.i();
             mGifDrawable.start();
         }
     }
 
     private void stopAnimation() {
         if (mGifDrawable != null) {
+            LogUtils.i();
             mGifDrawable.stop();
         }
     }
 
     @Override
     public void onStartAnimator(@NonNull RefreshLayout refreshLayout, int height, int maxDragHeight) {
-        //startAnim();
+        startAnim();
     }
 
     @Override

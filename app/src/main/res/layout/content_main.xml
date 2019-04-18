@@ -8,7 +8,7 @@
     android:paddingStart="15dp"
     android:paddingTop="15dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".activity.MainActivity"
+    tools:context=".ui.MainActivity"
     tools:showIn="@layout/activity_main">
 
     <Button
@@ -22,7 +22,7 @@
         />
 
     <Button
-        android:id="@+id/btn_request_float_permission"
+        android:id="@+id/btn_request_overlay_permission"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="请求悬浮窗权限"
@@ -32,13 +32,24 @@
         />
 
     <Button
+        android:id="@+id/btn_request_notification_permission"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="请求通知权限"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="@id/btn_request_overlay_permission"
+        app:layout_constraintStart_toEndOf="@id/btn_request_overlay_permission"
+        app:layout_constraintTop_toTopOf="@id/btn_request_overlay_permission"
+        />
+
+    <Button
         android:id="@+id/btn_kotlin_test"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Kotlin Test"
         android:textAllCaps="false"
-        app:layout_constraintStart_toStartOf="@id/btn_request_float_permission"
-        app:layout_constraintTop_toBottomOf="@id/btn_request_float_permission"
+        app:layout_constraintStart_toStartOf="@id/btn_request_overlay_permission"
+        app:layout_constraintTop_toBottomOf="@id/btn_request_overlay_permission"
         />
 
     <Button
@@ -50,6 +61,7 @@
         app:layout_constraintStart_toStartOf="@id/btn_kotlin_test"
         app:layout_constraintTop_toBottomOf="@id/btn_kotlin_test"
         />
+
     <Button
         android:id="@+id/btn_green_dao"
         android:layout_width="wrap_content"

@@ -23,7 +23,7 @@ class ApiManager private constructor() {
 
 
     private val outTime = 1000 * 10L
-    private lateinit var wanAndroidRetrofit: Retrofit
+    private var wanAndroidRetrofit: Retrofit
     var okHttpClient: OkHttpClient
 
     companion object {

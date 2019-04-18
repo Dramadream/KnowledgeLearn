@@ -1,4 +1,4 @@
-package com.fkw.knowledge.widget;
+package com.fkw.knowledge.util.loadandretry;
 
 import android.view.View;
 import android.view.animation.AlphaAnimation;
@@ -8,7 +8,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fkw.knowledge.R;
-import com.fkw.loadandretry.OnLoadingAndRetryListener;
 
 /**
  * Author:          Kevin </BR>
